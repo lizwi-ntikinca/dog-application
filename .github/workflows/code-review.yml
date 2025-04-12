@@ -1,0 +1,57 @@
+name: "Android Code Review"
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  code-review:
+    name: Run Code Quality Checks
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      pull-requests: write  # Needed to comment on PRs
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: 17
+
+      - name: Grant Gradle Permission
+        run: chmod +x ./gradlew
+
+      - name: Run Detekt
+        run: ./gradlew detekt
+
+      - name: Run Android Lint
+        run: ./gradlew lintDebug
+
+      - name: Run Unit Tests
+        run: ./gradlew testDebugUnitTest
+
+      # Optional: Run Ktlint if you use it
+      # - name: Run ktlint
+      #   run: ./gradlew ktlintCheck
+
+      - name: Comment on PR if issues found
+        if: failure()
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: code-review
+          message: |
+            ❌ Code quality checks failed.  
+            Please fix Detekt, Lint, or Unit Test issues before merging.
+
+      - name: Approve PR if all checks pass (optional)
+        if: success()
+        uses: hmarr/auto-approve-action@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
