@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android) apply false
     alias(libs.plugins.compose.compiler) apply false
     kotlin("plugin.serialization") version "1.9.0"
+    id("io.gitlab.arturbosch.detekt") version "1.23.0"
 }
 
 buildscript {
