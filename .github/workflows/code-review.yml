@@ -41,17 +41,19 @@ jobs:
       # - name: Run ktlint
       #   run: ./gradlew ktlintCheck
 
-      - name: Comment on PR if issues found
+      - name: Comment on PR if checks failed
         if: failure()
         uses: marocchino/sticky-pull-request-comment@v2
         with:
           header: code-review
           message: |
-            ❌ Code quality checks failed.  
+            ❌ **Code quality checks failed.**  
             Please fix Detekt, Lint, or Unit Test issues before merging.
 
-      - name: Approve PR if all checks pass (optional)
+      - name: Comment on PR if checks passed
         if: success()
-        uses: hmarr/auto-approve-action@v3
+        uses: marocchino/sticky-pull-request-comment@v2
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          header: code-review
+          message: |
+            ✅ **Code quality checks passed. All is good!**
