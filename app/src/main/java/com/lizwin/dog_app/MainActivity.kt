@@ -4,7 +4,10 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.runtime.remember
+import com.lizwin.dog_app.common.data.security.SecureStorage
 import com.lizwin.dog_app.common.presentation.navigation.AppNavHost
+import com.lizwin.dog_app.common.presentation.navigation.Destinations
 import com.lizwin.dog_app.common.presentation.theme.DogApplicationTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -12,10 +15,23 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val storedApiKey = SecureStorage.getApiKey(this)
+        var startDestination = Destinations.LandingScreen.route
+
+
+        if (storedApiKey == null) {
+            startDestination = Destinations.ApiKey.route
+        }
         enableEdgeToEdge()
         setContent {
+            val backDispatcher = remember { onBackPressedDispatcher }
+
             DogApplicationTheme {
-                AppNavHost()
+                AppNavHost(
+                    startDestination = startDestination,
+                    onNavigateBack = { backDispatcher.onBackPressed() }
+                )
             }
         }
     }

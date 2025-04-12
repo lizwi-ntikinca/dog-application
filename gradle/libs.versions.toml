@@ -19,7 +19,6 @@ retrofit = "2.9.0"
 coilCompose = "2.4.0"
 hilt = "2.50"
 liveData = "2.6.2"
-viewmodelLifecycle = "2.7.0"
 composeNavigation = "2.7.6"
 securityCrypto = "1.1.0-alpha06"
 firebaseAppdistributionGradle = "5.1.1"
@@ -59,7 +58,6 @@ view-model-life-cycle = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx",
 material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsExtended"}
 mockito-inline = { module = "org.mockito:mockito-inline", version.ref = "mockito"}
 mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito"}
-mockito-kotlin = { module = "org.mockito:mockito-kotlin", version.ref = "mockito"}
 test-core = { module = "androidx.test:core", version.ref = "test"}
 
 [plugins]

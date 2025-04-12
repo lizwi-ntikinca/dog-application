@@ -39,6 +39,7 @@ import com.lizwin.dog_app.api_key.presentation.ApiKeyEvent
 @Composable
 fun ApiKeyScreen(
     apiKeyEvent: (ApiKeyEvent) -> Unit,
+    navigator: Navigator
 ) {
     Box(
         modifier = Modifier.fillMaxSize()
@@ -104,6 +105,7 @@ fun ApiKeyScreen(
             Button(
                 onClick = {
                     apiKeyEvent(ApiKeyEvent.OnDoneButtonClicked(apiKey))
+                    navigator.navigateToHomeScreen()
                 },
                 modifier = Modifier
                     .fillMaxWidth()
