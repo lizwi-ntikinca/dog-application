@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Dog App</string>
+    <string name="enter_api_key">Enter your api key</string>
+    <string name="done">Done</string>
+
+    <!--View descriptions -->
+    <string name="toggle_password_visibility">Toggle password visibility</string>
+    <string name="image_description">picture</string>
+    <string name="title_api_key_screen">The Dog API - API Key</string>
+    <string name="description_api_key_screen">Welcome to the Dog API app. In order to use this app effectively, you need to enter your api key so that your service requests can be authenticated. If you don\'t provide a correct api key you won\'t be able to use the app effectively.</string>
 </resources>
