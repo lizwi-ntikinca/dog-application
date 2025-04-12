@@ -8,14 +8,24 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.lizwin.dog_app.api_key.presentation.ApiKeyViewModel
+import com.lizwin.dog_app.landing.presentation.LandingScreen
 
 @Composable
-fun AppNavHost(navController: NavHostController = rememberNavController(), startDestination: String = Destinations.ApiKey.route) {
+fun AppNavHost(
+    navController: NavHostController = rememberNavController(),
+    startDestination: String,
+    onNavigateBack: () -> Unit
+) {
+
+    val navigator = NavigatorImpl(navController = navController, onNavigateBack = onNavigateBack)
 
     NavHost(navController = navController, startDestination = startDestination) {
         composable(Destinations.ApiKey.route) {
             val viewModel: ApiKeyViewModel = hiltViewModel()
-            ApiKeyScreen(viewModel::onEvent)
+            ApiKeyScreen(viewModel::onEvent, navigator)
+        }
+        composable(Destinations.LandingScreen.route) {
+            LandingScreen()
         }
     }
 }
