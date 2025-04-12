@@ -1,0 +1,47 @@
+name: "CodeQL Analysis"
+
+on:
+  pull_request:
+    branches: 
+      - main
+      - develop
+
+jobs:
+  analyze:
+    name: CodeQL Analyze (${{ matrix.language }})
+    runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
+    permissions:
+      security-events: write
+      packages: read
+      actions: read
+      contents: read
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - language: java-kotlin
+            build-mode: autobuild
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+          build-mode: ${{ matrix.build-mode }}
+          # Optional: Uncomment to use extended or custom CodeQL queries
+          # queries: security-extended
+
+      - name: Manual Build Placeholder (Only if manual build mode is set)
+        if: matrix.build-mode == 'manual'
+        run: |
+          echo 'Manual build mode is set. Add build steps here if needed.'
+          exit 1
+
+      - name: Run CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:${{ matrix.language }}"
