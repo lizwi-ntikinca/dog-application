@@ -11,6 +11,7 @@ composeBom = "2024.09.00"
 composeCompiler = "1.5.1"
 viewModelLifeCycle = "2.7.0"
 coroutineCore = "1.7.3"
+coroutineTestVersion = "1.7.3"
 materialIconsExtended = "1.7.8"
 mockito = "4.3.1"
 test = "1.4.0"
@@ -59,6 +60,7 @@ material-icons-extended = { module = "androidx.compose.material:material-icons-e
 mockito-inline = { module = "org.mockito:mockito-inline", version.ref = "mockito"}
 mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito"}
 test-core = { module = "androidx.test:core", version.ref = "test"}
+coroutine-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutineTestVersion"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

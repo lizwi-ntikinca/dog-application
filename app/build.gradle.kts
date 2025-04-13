@@ -107,6 +107,8 @@ dependencies {
     testImplementation(libs.mockito.core)
     testImplementation(libs.mockito.inline)
     testImplementation(libs.test.core)
+    testImplementation(kotlin("test"))
+    testImplementation(libs.coroutine.test)
 }
 
 kapt {

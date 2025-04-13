@@ -13,13 +13,13 @@ import com.lizwin.dog_app.landing.presentation.LandingScreen
 @Composable
 fun AppNavHost(
     navController: NavHostController = rememberNavController(),
-    startDestination: String,
+    startDestination: Destinations,
     onNavigateBack: () -> Unit
 ) {
 
     val navigator = NavigatorImpl(navController = navController, onNavigateBack = onNavigateBack)
 
-    NavHost(navController = navController, startDestination = startDestination) {
+    NavHost(navController = navController, startDestination = startDestination.route) {
         composable(Destinations.ApiKey.route) {
             val viewModel: ApiKeyViewModel = hiltViewModel()
             ApiKeyScreen(viewModel::onEvent, navigator)

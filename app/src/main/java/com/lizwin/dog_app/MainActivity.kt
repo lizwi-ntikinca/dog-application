@@ -17,11 +17,11 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         val storedApiKey = SecureStorage.getApiKey(this)
-        var startDestination = Destinations.LandingScreen.route
+        var startDestination: Destinations = Destinations.LandingScreen
 
 
         if (storedApiKey == null) {
-            startDestination = Destinations.ApiKey.route
+            startDestination = Destinations.ApiKey
         }
         enableEdgeToEdge()
         setContent {
