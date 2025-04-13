@@ -4,6 +4,8 @@ import android.app.Application
 import android.content.Context
 import com.lizwin.dog_app.common.data.network.SecureApiKeyInterceptor
 import com.lizwin.dog_app.common.data.remote.TheDogApi
+import com.lizwin.dog_app.landing.data.repository.DogListRepositoryImpl
+import com.lizwin.dog_app.landing.domain.repository.DogListRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -47,5 +49,11 @@ object AppModule {
     @Provides
     fun provideApiService(retrofit: Retrofit): TheDogApi {
         return retrofit.create(TheDogApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun providesRepository(theDogApi: TheDogApi) : DogListRepository {
+        return DogListRepositoryImpl(theDogApi)
     }
 }

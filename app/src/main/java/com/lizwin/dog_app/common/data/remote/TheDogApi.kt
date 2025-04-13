@@ -1,5 +1,6 @@
 package com.lizwin.dog_app.common.data.remote
 
+import com.lizwin.dog_app.landing.data.model.DogResponseDTO
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -9,5 +10,5 @@ interface TheDogApi {
         @Query("order") order : String = "ASC",
         @Query("limit") limit : Int = 26,
         @Query("page") page : Int = 0
-    ) : String // To be implemented correctly
+    ) : List<DogResponseDTO>
 }
