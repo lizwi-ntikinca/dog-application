@@ -6,6 +6,17 @@
     <!--View descriptions -->
     <string name="toggle_password_visibility">Toggle password visibility</string>
     <string name="image_description">picture</string>
+
+    <string name="dog_description">Dog</string>
+    <string name="default_dog_name">Name: Unknown</string>
+    <string name="item_clicked_toast_holder">Clicked: %1$s</string>
+    <string name="results">Results</string>
+    <string name="search">Search</string>
+    <string name="loading">Loading…</string>
     <string name="title_api_key_screen">The Dog API - API Key</string>
     <string name="description_api_key_screen">Welcome to the Dog API app. In order to use this app effectively, you need to enter your api key so that your service requests can be authenticated. If you don\'t provide a correct api key you won\'t be able to use the app effectively.</string>
+    <string name="something_went_wrong">Something went wrong....</string>
+    <string name="try_again">Try again</string>
+    <string name="empty" />
+    <string name="landing_title">BROWSE DOGS</string>
 </resources>
