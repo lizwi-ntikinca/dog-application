@@ -1,9 +1,9 @@
-package com.lizwin.dog_app.landing.domain.model
+package com.lizwin.dog_app.dog_details.view_dog_details.domain.model
 
 import com.lizwin.dog_app.common.data.network.ResponseStatus
 import com.lizwin.dog_app.common.domain.model.Dog
 
-data class DogListResponseData(
+data class DogDetailsResponse (
     val status: ResponseStatus = ResponseStatus.SUCCESS,
-    val response: List<Dog> = emptyList()
+    val response: Dog = Dog()
 )

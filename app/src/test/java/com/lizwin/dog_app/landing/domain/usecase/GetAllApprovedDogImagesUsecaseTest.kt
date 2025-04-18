@@ -2,10 +2,10 @@ package com.lizwin.dog_app.landing.domain.usecase
 
 import com.lizwin.dog_app.MainDispatcherRule
 import com.lizwin.dog_app.common.data.network.ResponseStatus
-import com.lizwin.dog_app.landing.domain.model.Dog
 import com.lizwin.dog_app.landing.domain.model.DogListResponseData
 import com.lizwin.dog_app.landing.domain.repository.DogListRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import com.lizwin.dog_app.common.domain.model.Dog
 import org.junit.Assert.assertEquals
 import kotlinx.coroutines.test.runTest
 import org.junit.Before

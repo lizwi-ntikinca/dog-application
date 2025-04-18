@@ -13,4 +13,8 @@ class NavigatorImpl(
     override fun navigateBack() {
         onNavigateBack()
     }
+
+    override fun navigateToDogDetailsScreen(id: String) {
+        navController.navigate("${Routes.DOG_DETAILS}/$id")
+    }
 }
