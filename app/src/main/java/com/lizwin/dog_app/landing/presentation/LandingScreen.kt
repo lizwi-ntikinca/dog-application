@@ -2,7 +2,6 @@ package com.lizwin.dog_app.landing.presentation
 
 
 import android.annotation.SuppressLint
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -12,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -26,12 +24,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.runtime.mutableStateOf
@@ -41,14 +39,16 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.VisualTransformation
 import com.lizwin.dog_app.R
+import com.lizwin.dog_app.common.domain.model.Dog
+import com.lizwin.dog_app.common.presentation.navigation.Navigator
 import com.lizwin.dog_app.common.presentation.ui.ErrorScreen
 import com.lizwin.dog_app.common.presentation.ui.LoadingDialog
-import com.lizwin.dog_app.landing.domain.model.Dog
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun LandingScreen(
-    viewModel: DogLandingScreenViewModel = hiltViewModel()
+    viewModel: DogLandingScreenViewModel = hiltViewModel(),
+    navigator: Navigator
 ) {
     val state by viewModel.state.collectAsState()
 
@@ -64,7 +64,10 @@ fun LandingScreen(
             }
         )
 
-        state.isSuccess -> LandingScreenContent(dogList = state.dogData.response)
+        state.isSuccess -> LandingScreenContent(
+            dogList = state.dogData.response,
+            navigator = navigator
+        )
     }
 }
 
@@ -72,9 +75,9 @@ fun LandingScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LandingScreenContent(
-    dogList: List<Dog>
+    dogList: List<Dog>,
+    navigator: Navigator
 ) {
-    val context = LocalContext.current
     var searchQuery by remember { mutableStateOf("") }
     Scaffold(
         topBar = {
@@ -137,15 +140,7 @@ fun LandingScreenContent(
             ) {
                 items(dogList) { dog ->
                     LandingItem(dog) {
-                        Toast
-                            .makeText(
-                                context,
-                                context.getString(
-                                    R.string.item_clicked_toast_holder,
-                                    dog.breeds.firstOrNull()?.name
-                                ), Toast.LENGTH_SHORT
-                            )
-                            .show()
+                        navigator.navigateToDogDetailsScreen(dog.id)
                     }
                 }
             }

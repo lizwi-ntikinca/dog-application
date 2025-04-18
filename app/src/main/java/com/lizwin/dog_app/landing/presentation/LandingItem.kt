@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.lizwin.dog_app.R
-import com.lizwin.dog_app.landing.domain.model.Dog
+import com.lizwin.dog_app.common.domain.model.Dog
 
 @Composable
 fun LandingItem(

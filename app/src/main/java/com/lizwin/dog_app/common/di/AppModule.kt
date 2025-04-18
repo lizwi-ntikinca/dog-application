@@ -4,6 +4,8 @@ import android.app.Application
 import android.content.Context
 import com.lizwin.dog_app.common.data.network.SecureApiKeyInterceptor
 import com.lizwin.dog_app.common.data.remote.TheDogApi
+import com.lizwin.dog_app.dog_details.view_dog_details.data.repository.ViewDogDetailsRepositoryImpl
+import com.lizwin.dog_app.dog_details.view_dog_details.domain.repository.ViewDogDetailsRepository
 import com.lizwin.dog_app.landing.data.repository.DogListRepositoryImpl
 import com.lizwin.dog_app.landing.domain.repository.DogListRepository
 import dagger.Module
@@ -55,5 +57,11 @@ object AppModule {
     @Singleton
     fun providesRepository(theDogApi: TheDogApi) : DogListRepository {
         return DogListRepositoryImpl(theDogApi)
+    }
+
+    @Provides
+    @Singleton
+    fun providesDogDetailsRepository(theDogApi: TheDogApi) : ViewDogDetailsRepository {
+        return ViewDogDetailsRepositoryImpl(theDogApi)
     }
 }

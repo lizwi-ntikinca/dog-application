@@ -1,12 +1,12 @@
 package com.lizwin.dog_app.landing.data.model
 
+import com.lizwin.dog_app.common.data.model.BreedDTO
 import com.lizwin.dog_app.landing.domain.model.DogListResponseData
-import kotlinx.serialization.SerialName
+import com.lizwin.dog_app.common.domain.model.Dog
+import com.lizwin.dog_app.common.domain.model.Breed
+import com.lizwin.dog_app.common.domain.model.Weight
+import com.lizwin.dog_app.common.domain.model.Height
 import kotlinx.serialization.Serializable
-import com.lizwin.dog_app.landing.domain.model.Dog
-import com.lizwin.dog_app.landing.domain.model.Breed
-import com.lizwin.dog_app.landing.domain.model.Height
-import com.lizwin.dog_app.landing.domain.model.Weight
 
 @Serializable
 data class DogResponseDTO(
@@ -15,38 +15,6 @@ data class DogResponseDTO(
     val url: String,
     val width: Int,
     val height: Int
-)
-
-@Serializable
-data class BreedDTO(
-    val weight: WeightDTO = WeightDTO(),
-    val height: HeightDTO = HeightDTO(),
-    val id: Int = 0,
-    val name: String = "",
-    @SerialName("country_code")
-    val country_code: String? = "",
-    @SerialName("bred_for")
-    val bred_for: String? = "",
-    @SerialName("breed_group")
-    val breed_group: String? = "",
-    @SerialName("life_span")
-    val life_span: String = "",
-    val temperament: String? = "",
-    val origin: String? = "",
-    @SerialName("reference_image_id")
-    val reference_image_id: String? = ""
-)
-
-@Serializable
-data class WeightDTO(
-    val imperial: String = "",
-    val metric: String = ""
-)
-
-@Serializable
-data class HeightDTO(
-    val imperial: String = "",
-    val metric: String = ""
 )
 
 fun List<DogResponseDTO>.toDogResponse(): DogListResponseData {

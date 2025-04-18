@@ -2,8 +2,8 @@ package com.lizwin.dog_app.landing.data.repository
 
 import com.lizwin.dog_app.common.data.network.ResponseStatus
 import com.lizwin.dog_app.common.data.remote.TheDogApi
+import com.lizwin.dog_app.common.domain.model.Dog
 import com.lizwin.dog_app.landing.data.model.DogResponseDTO
-import com.lizwin.dog_app.landing.domain.model.Dog
 import com.lizwin.dog_app.landing.domain.model.DogListResponseData
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals

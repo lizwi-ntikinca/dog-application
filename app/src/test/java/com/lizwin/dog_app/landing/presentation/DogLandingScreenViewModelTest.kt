@@ -2,7 +2,7 @@ package com.lizwin.dog_app.landing.presentation
 
 import com.lizwin.dog_app.MainDispatcherRule
 import com.lizwin.dog_app.common.data.network.ResponseStatus
-import com.lizwin.dog_app.landing.domain.model.Dog
+import com.lizwin.dog_app.common.domain.model.Dog
 import com.lizwin.dog_app.landing.domain.model.DogListResponseData
 import com.lizwin.dog_app.landing.domain.usecase.GetAllApprovedDogImagesUsecase
 import kotlinx.coroutines.ExperimentalCoroutinesApi

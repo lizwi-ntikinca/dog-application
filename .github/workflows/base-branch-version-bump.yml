@@ -1,0 +1,82 @@
+# Checks out both the PR branch and the base branch
+# Reads versionCode and versionName from the base branch
+# Increments those values
+# Updates them in the PR branch
+# Commits and pushes the changes to the PR branch
+# This helps avoid duplicate versionCodes if multiple PRs are created simultaneously
+
+name: "Auto Bump Version from Base Branch"
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - main
+      - develop
+
+jobs:
+  bump-version:
+    name: Bump Version Based on Base Branch
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout PR Branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0  # Needed to fetch full history
+
+      - name: Fetch Base Branch and Extract Version
+        id: base-version
+        run: |
+          # Fetch the base branch
+          git fetch origin ${{ github.base_ref }}
+
+          # Save the file from the base branch temporarily
+          git show origin/${{ github.base_ref }}:app/build.gradle > base-build.gradle
+
+          # Extract versionCode and versionName from base
+          BASE_VERSION_CODE=$(grep -oP 'versionCode\s+\K\d+' base-build.gradle)
+          BASE_VERSION_NAME=$(grep -oP 'versionName\s+"\K[^"]+' base-build.gradle)
+
+          echo "Base versionCode: $BASE_VERSION_CODE"
+          echo "Base versionName: $BASE_VERSION_NAME"
+
+          echo "base_code=$BASE_VERSION_CODE" >> $GITHUB_OUTPUT
+          echo "base_name=$BASE_VERSION_NAME" >> $GITHUB_OUTPUT
+
+      - name: Bump Version from Base
+        run: |
+          FILE=app/build.gradle
+
+          # Use outputs from previous step
+          BASE_CODE=${{ steps.base-version.outputs.base_code }}
+          BASE_NAME=${{ steps.base-version.outputs.base_name }}
+
+          NEW_CODE=$((BASE_CODE + 1))
+
+          IFS='.' read -r MAJOR MINOR PATCH <<< "$BASE_NAME"
+          PATCH=$((PATCH + 1))
+          NEW_NAME="$MAJOR.$MINOR.$PATCH"
+
+          # Update in the file
+          sed -i "s/versionCode .*/versionCode $NEW_CODE/" "$FILE"
+          sed -i "s/versionName \".*\"/versionName \"$NEW_NAME\"/" "$FILE"
+
+          echo "🔢 Updated to versionCode $NEW_CODE"
+          echo "🏷️ Updated to versionName $NEW_NAME"
+
+      - name: Commit & Push Bumped Version
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add app/build.gradle
+          git commit -m "⬆️ Bump versionCode to $NEW_CODE and versionName to $NEW_NAME (from base)"
+          git push origin HEAD:${{ github.head_ref }}
+        env:
+          NEW_CODE: ${{ steps.base-version.outputs.base_code }}
+          NEW_NAME: ${{ steps.base-version.outputs.base_name }}
