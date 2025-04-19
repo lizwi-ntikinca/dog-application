@@ -37,11 +37,11 @@ jobs:
           git fetch origin ${{ github.base_ref }}
 
           # Save the file from the base branch temporarily
-          git show origin/${{ github.base_ref }}:app/build.gradle > base-build.gradle
+          git show origin/${{ github.base_ref }}:app/build.gradle.kts > base-build.gradle.kts
 
           # Extract versionCode and versionName from base
-          BASE_VERSION_CODE=$(grep -oP 'versionCode\s+\K\d+' base-build.gradle)
-          BASE_VERSION_NAME=$(grep -oP 'versionName\s+"\K[^"]+' base-build.gradle)
+          BASE_VERSION_CODE=$(grep -oP 'versionCode\s*=\s*\K\d+' base-build.gradle.kts)
+          BASE_VERSION_NAME=$(grep -oP 'versionName\s*=\s*"\K[^"]+' base-build.gradle.kts)
 
           echo "Base versionCode: $BASE_VERSION_CODE"
           echo "Base versionName: $BASE_VERSION_NAME"
@@ -51,7 +51,7 @@ jobs:
 
       - name: Bump Version from Base
         run: |
-          FILE=app/build.gradle
+          FILE=app/build.gradle.kts
 
           # Use outputs from previous step
           BASE_CODE=${{ steps.base-version.outputs.base_code }}
@@ -64,8 +64,8 @@ jobs:
           NEW_NAME="$MAJOR.$MINOR.$PATCH"
 
           # Update in the file
-          sed -i "s/versionCode .*/versionCode $NEW_CODE/" "$FILE"
-          sed -i "s/versionName \".*\"/versionName \"$NEW_NAME\"/" "$FILE"
+          sed -i "s/versionCode\s*=.*/versionCode = $NEW_CODE/" "$FILE"
+          sed -i "s/versionName\s*=.*/versionName = \"$NEW_NAME\"/" "$FILE"
 
           echo "🔢 Updated to versionCode $NEW_CODE"
           echo "🏷️ Updated to versionName $NEW_NAME"
@@ -74,7 +74,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add app/build.gradle
+          git add app/build.gradle.kts
           git commit -m "⬆️ Bump versionCode to $NEW_CODE and versionName to $NEW_NAME (from base)"
           git push origin HEAD:${{ github.head_ref }}
         env:
