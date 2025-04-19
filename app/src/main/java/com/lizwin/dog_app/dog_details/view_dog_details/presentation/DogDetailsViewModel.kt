@@ -1,10 +1,12 @@
 package com.lizwin.dog_app.dog_details.view_dog_details.presentation
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.lizwin.dog_app.common.data.network.ResponseStatus
 import com.lizwin.dog_app.dog_details.view_dog_details.domain.usecase.GetDogDetailsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -12,10 +14,27 @@ import javax.inject.Inject
 class DogDetailsViewModel @Inject constructor(
     private val getDogDetailsUseCase: GetDogDetailsUseCase
 ) : ViewModel() {
-    fun loadDetails(id: String) {
+    private val _uiState = MutableStateFlow(DogDetailsScreenState())
+    val uiState = _uiState.asStateFlow()
+
+    fun onEvent(event: DogDetailsScreenUiEvent) {
+        when(event) {
+            is DogDetailsScreenUiEvent.Load -> {
+                _uiState.value = _uiState.value.copy(isLoading = true)
+                loadDetails(event.imgId)
+            }
+        }
+    }
+
+    private fun loadDetails(id: String) {
         viewModelScope.launch {
-            val response = getDogDetailsUseCase(id)
-            Log.d("DOG_DETAILS", response.toString())
+            val dogDetails = getDogDetailsUseCase(id)
+
+            _uiState.value = _uiState.value.copy(
+                isLoading = false,
+                isSuccess = dogDetails.status == ResponseStatus.SUCCESS,
+                dogInformation = dogDetails
+            )
         }
     }
 }

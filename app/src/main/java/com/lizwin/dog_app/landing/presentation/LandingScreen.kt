@@ -2,7 +2,6 @@ package com.lizwin.dog_app.landing.presentation
 
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,20 +22,21 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.VisualTransformation
 import com.lizwin.dog_app.R
 import com.lizwin.dog_app.common.domain.model.Dog
@@ -84,8 +84,10 @@ fun LandingScreenContent(
             TopAppBar(title = {
                 Text(
                     text = stringResource(R.string.landing_title),
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold
+                    style = MaterialTheme.typography.titleLarge.copy(
+                        color = colorScheme.primary,
+                        fontWeight = FontWeight.Bold
+                    )
                 )
             })
         }
@@ -93,7 +95,6 @@ fun LandingScreenContent(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.White)
                 .padding(paddingValues)
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -108,9 +109,12 @@ fun LandingScreenContent(
                     .clip(RoundedCornerShape(12.dp))
                     .border(
                         width = 2.dp,
-                        color = Color.Black,
+                        color = colorScheme.primary,
                         shape = RoundedCornerShape(12.dp)
                     ),
+                textStyle = TextStyle(
+                    color = colorScheme.outline
+                ),
                 placeholder = { Text(stringResource(R.string.search)) },
                 visualTransformation = VisualTransformation.None,
                 trailingIcon = {
@@ -119,16 +123,17 @@ fun LandingScreenContent(
                         contentDescription = stringResource(R.string.search),
                         modifier = Modifier
                             .padding(6.dp),
-                        tint = Color.Black
+                        tint = colorScheme.outline
                     )
                 },
-                singleLine = true
+                singleLine = true,
             )
 
             Text(
                 text = stringResource(R.string.results),
-                fontWeight = FontWeight.Bold,
-                fontSize = 20.sp
+                style = MaterialTheme.typography.titleMedium.copy(
+                    color = colorScheme.primary
+                )
             )
 
             LazyVerticalGrid(
