@@ -6,6 +6,7 @@
     <!--View descriptions -->
     <string name="toggle_password_visibility">Toggle password visibility</string>
     <string name="image_description">picture</string>
+    <string name="back">Back</string>
 
     <string name="dog_description">Dog</string>
     <string name="default_dog_name">Name: Unknown</string>
@@ -19,4 +20,12 @@
     <string name="try_again">Try again</string>
     <string name="empty" />
     <string name="landing_title">BROWSE DOGS</string>
+    <string name="dog_details_title">Breed Details</string>
+    <string name="unknown_breed">Unknown Breed</string>
+    <string name="general_companionship">General companionship</string>
+    <string name="unknown_group">Unknown Group</string>
+    <string name="unknown_origin">Unknown Origin</string>
+    <string name="life_span_not_available">Life span not available</string>
+    <string name="temperament_information_not_available">Temperament information not available</string>
+    <string name="not_specified">Not specified</string>
 </resources>

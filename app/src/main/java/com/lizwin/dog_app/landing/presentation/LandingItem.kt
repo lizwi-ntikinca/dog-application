@@ -10,6 +10,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.Modifier
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,11 +18,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.lizwin.dog_app.R
 import com.lizwin.dog_app.common.domain.model.Dog
@@ -35,13 +33,12 @@ fun LandingItem(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 4.dp)
-            .background(Color.White)
             .clickable { onCardClicked() },
         colors = CardColors(
-            containerColor = Color.White,
-            contentColor = Color.DarkGray,
-            disabledContainerColor = Color.White,
-            disabledContentColor = Color.DarkGray
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
+            contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+            disabledContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+            disabledContentColor = MaterialTheme.colorScheme.onSecondaryContainer
         ),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
@@ -66,10 +63,10 @@ fun LandingItem(
         Text(
             text = dog.breeds.firstOrNull()?.name ?: stringResource(R.string.default_dog_name),
             modifier = Modifier.fillMaxWidth(),
-            fontSize = 14.sp,
-            fontWeight = FontWeight.Normal,
-            fontStyle = FontStyle.Italic,
-            textAlign = TextAlign.Center
+            color = MaterialTheme.colorScheme.onPrimaryContainer,
+            style = MaterialTheme.typography.bodyMedium.copy(
+                textAlign = TextAlign.Center
+            )
         )
     }
 }

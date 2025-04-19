@@ -8,7 +8,7 @@ import androidx.compose.runtime.remember
 import com.lizwin.dog_app.common.data.security.SecureStorage
 import com.lizwin.dog_app.common.presentation.navigation.AppNavHost
 import com.lizwin.dog_app.common.presentation.navigation.Destinations
-import com.lizwin.dog_app.common.presentation.theme.DogApplicationTheme
+import com.lizwin.dog_app.common.presentation.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -27,7 +27,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             val backDispatcher = remember { onBackPressedDispatcher }
 
-            DogApplicationTheme {
+            AppTheme {
                 AppNavHost(
                     startDestination = startDestination,
                     onNavigateBack = { backDispatcher.onBackPressed() }

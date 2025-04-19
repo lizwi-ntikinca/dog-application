@@ -40,7 +40,8 @@ fun AppNavHost(
         ) { navBackStackEntry ->
             val id = navBackStackEntry.arguments?.getString(ID).orEmpty()
             DogDetailsScreen(
-                id = id
+                id = id,
+                onBackClick = { navigator.navigateBack() }
             )
         }
     }
