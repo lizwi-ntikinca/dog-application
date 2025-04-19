@@ -10,7 +10,7 @@ interface TheDogApi {
     @GET("images/search")
     suspend fun searchAllApprovedImages(
         @Query("order") order : String = "ASC",
-        @Query("limit") limit : Int = 36,
+        @Query("limit") limit : Int = 100,
         @Query("page") page : Int = 0
     ) : List<DogResponseDTO>
 

@@ -26,19 +26,39 @@ class DogLandingScreenViewModel @Inject constructor(
                 )
                 fetchLandingData()
             }
+
+            is LandingScreenUiEvent.Search -> {
+                _state.value = _state.value.copy(isLoading = true)
+                onSearchQueryChanged(event.query)
+            }
         }
     }
 
     private fun fetchLandingData() {
         viewModelScope.launch {
-            val response = getAllApprovedDogImagesUsecase()
+            val results = getAllApprovedDogImagesUsecase()
 
             _state.value = _state.value.copy(
+                status = results.status,
                 isLoading = false,
-                isSuccess = response.status == ResponseStatus.SUCCESS,
-                dogData = response
+                isSuccess = results.status == ResponseStatus.SUCCESS,
+                dogList = results.response,
+                filteredDogList = results.response
                 //To do - add error message
             )
         }
+    }
+
+    private fun onSearchQueryChanged(query: String) {
+        val filtered = if (query.isBlank()) {
+            _state.value.dogList
+        } else _state.value.dogList.filter { dog ->
+            dog.breeds.firstOrNull()?.name?.contains(query, ignoreCase = true) == true
+        }
+
+        _state.value = _state.value.copy(
+            isLoading = false,
+            filteredDogList = filtered
+        )
     }
 }

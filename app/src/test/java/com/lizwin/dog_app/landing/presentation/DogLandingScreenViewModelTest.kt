@@ -68,8 +68,8 @@ class DogLandingScreenViewModelTest {
 
         assertFalse(viewModel.state.value.isLoading)
         assertTrue(viewModel.state.value.isSuccess)
-        assertTrue(viewModel.state.value.dogData.status == ResponseStatus.SUCCESS)
-        assertEquals(expectedResponse, viewModel.state.value.dogData)
+        assertTrue(viewModel.state.value.status == ResponseStatus.SUCCESS)
+        assertEquals(expectedResponse.response, viewModel.state.value.dogList)
     }
 
     @Test
@@ -81,7 +81,8 @@ class DogLandingScreenViewModelTest {
 
         assertFalse(viewModel.state.value.isLoading)
         assertFalse(viewModel.state.value.isSuccess)
-        assertTrue(viewModel.state.value.dogData.status == ResponseStatus.FAILED)
-        assertTrue(viewModel.state.value.dogData.response.isEmpty())
+        assertTrue(viewModel.state.value.status == ResponseStatus.FAILED)
+        assertTrue(viewModel.state.value.dogList.isEmpty())
+        assertTrue(viewModel.state.value.filteredDogList.isEmpty())
     }
 }
