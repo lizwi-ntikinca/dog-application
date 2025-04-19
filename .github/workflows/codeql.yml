@@ -8,7 +8,7 @@ on:
 
 jobs:
   analyze:
-    name: CodeQL Analyze (${{ matrix.language }})
+    name: CodeQL Analyze
     runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
     permissions:
       security-events: write

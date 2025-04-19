@@ -65,7 +65,8 @@ fun LandingScreen(
         )
 
         state.isSuccess -> LandingScreenContent(
-            dogList = state.dogData.response,
+            dogList = state.filteredDogList,
+            uiEvent = viewModel::onEvent,
             navigator = navigator
         )
     }
@@ -76,6 +77,7 @@ fun LandingScreen(
 @Composable
 fun LandingScreenContent(
     dogList: List<Dog>,
+    uiEvent: (LandingScreenUiEvent) -> Unit,
     navigator: Navigator
 ) {
     var searchQuery by remember { mutableStateOf("") }
@@ -96,13 +98,14 @@ fun LandingScreenContent(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .padding(16.dp),
+                .padding(horizontal = 16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             OutlinedTextField(
                 value = searchQuery,
                 onValueChange = {
                     searchQuery = it
+                    uiEvent(LandingScreenUiEvent.Search(searchQuery))
                 },
                 modifier = Modifier
                     .fillMaxWidth()
